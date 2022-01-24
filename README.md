@@ -1,6 +1,6 @@
 # Verification uing uvm
 
-### Simulation phases
+## Steps for running
 
 > 1. module load cadence/XCELIUMMAIN/19.03.009
 > 2. setenv UVMHOME \`ncroot`/tools/methodology/UVM/CDNS-1.1d
@@ -16,9 +16,4 @@
 ## Lab_XX Notes
 
 >All notes at local dokuwiki page:
-*[for more about phases](https://cadenceedu.vo.llnwd.net/v1/Courses/Standard/UVMA/publish/UVMA_v1_2_5_rev2/05_SimulationPhases/index_player.html?theme=dusk)*
-
-
-All component are ultimately derived from the subclass uvm_component, although UVM provides specialist subclasses for the test, testbench, UVC, squencer, driver, etc. 
-
-+UVM_TESTNAME={TEST_NAME}
+*[dokuwiki.borisblade.ru](https://dokuwiki.borisblade.ru/doku.php?id=grp163:cadence_verification_using_uvm)*
