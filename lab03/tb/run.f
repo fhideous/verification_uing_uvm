@@ -7,7 +7,7 @@
 +UVM_TESTNAME=base_test
 +UVM_VERBOSITY=UVM_HIGH
 //+UVM_VERBOSITY=UVM_LOW
-
++SVSEED=random
 // compile YAPP package and top level module
 ../sv/yapp_pkg.sv 
 top.sv     
