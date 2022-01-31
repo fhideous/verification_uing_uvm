@@ -52,3 +52,16 @@ class yapp_packet extends uvm_sequence_item;
   endfunction : post_randomize
 
 endclass: yapp_packet
+
+class short_yapp_packet extends yapp_packet;
+
+`uvm_object_utils(short_yapp_packet)
+
+  function new(string name = "short_yapp_packet");
+    super.new(name);
+  endfunction : new
+
+  constraint short_len    { length < 15;   } 
+  constraint short_addr   { addr != 'b10;  } 
+
+endclass : short_yapp_packet
