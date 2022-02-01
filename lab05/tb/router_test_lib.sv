@@ -11,9 +11,6 @@ endfunction : new
 
 function void build_phase(uvm_phase phase);
   super.build_phase(phase);
-  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
-                              "default_sequence",
-                              yapp_5_packets::get_type());
   uvm_config_int::set( this, "*", "recording_detail", 1);
   rot_tb = router_tb::type_id::create("root_tb", this);
   `uvm_info(get_type_name(), "Build Phase of the test is being exexuted", UVM_HIGH)
@@ -50,7 +47,9 @@ endfunction : build_phase
 
 endclass : short_packet_test
 
-
+//-------------------------------------
+// TEST. Driver and srquencer are disable
+//-------------------------------------
 
 class set_config_test extends base_test;
 
@@ -68,5 +67,26 @@ function void build_phase(uvm_phase phase);
   super.build_phase(phase);
 endfunction : build_phase
 
+endclass : set_config_test
 
-endclass //set_config_test extends base_test
+//-------------------------------------
+//  TEST. Call short packet with yapp_incr_payload_seq
+//-------------------------------------
+
+class incr_payload_test extends base_test;
+
+`uvm_component_utils(incr_payload_test)
+
+function new(string name, uvm_component parent);  
+  super.new(name, parent);
+endfunction : new
+
+function void build_phase(uvm_phase phase);
+  yapp_packet::type_id::set_type_override(short_yapp_packet::get_type());
+  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
+                              "default_sequence",
+                              yapp_incr_payload_seq::get_type());
+  super.build_phase(phase);
+endfunction : build_phase
+
+endclass : incr_payload_test
