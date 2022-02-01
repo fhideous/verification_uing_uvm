@@ -49,3 +49,24 @@ function void build_phase(uvm_phase phase);
 endfunction : build_phase
 
 endclass : short_packet_test
+
+
+
+class set_config_test extends base_test;
+
+`uvm_component_utils(set_config_test)
+
+function new(string name, uvm_component parent);  
+  super.new(name, parent);
+endfunction : new
+
+function void build_phase(uvm_phase phase);
+  uvm_config_int::set(this, "root_tb.yapp.tx_agent", "is_active", UVM_PASSIVE);
+  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
+                              "default_sequence",
+                              yapp_5_packets::get_type());
+  super.build_phase(phase);
+endfunction : build_phase
+
+
+endclass //set_config_test extends base_test
