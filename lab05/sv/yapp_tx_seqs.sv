@@ -108,7 +108,7 @@ class yapp_111_seq extends yapp_base_seq;
 
   virtual task body();
     `uvm_info(get_type_name(), "Executing yapp_111_seq sequence", UVM_LOW)
-    repeat(5)
+    repeat(3)
       `uvm_do_with(req, {req.addr == 2'b01;})
 
   endtask
@@ -161,3 +161,33 @@ class yapp_incr_payload_seq extends yapp_base_seq;
   endtask
 
 endclass : yapp_incr_payload_seq
+
+// ------------------------------
+// SEUENCE : single sequence which executes previous sequences
+// ------------------------------
+
+class yapp_exhaustive_seq extends yapp_base_seq;
+  
+  `uvm_object_utils(yapp_exhaustive_seq)
+
+  function new(string name="yapp_exhaustive_seq");
+    super.new(name);
+  endfunction
+
+  yapp_012_seq y012;
+  yapp_1_seq y1;
+  yapp_111_seq y111;
+  yapp_repeat_addr_seq yaddr;
+  yapp_incr_payload_seq yinc;
+
+  virtual task body();
+    `uvm_info(get_type_name(), "Executing yapp_exhaustive_seq sequence", UVM_LOW)
+    `uvm_do(y012)
+    `uvm_do(y1)
+    `uvm_do(y111)
+    `uvm_do(yaddr)
+    `uvm_do(yinc)
+  endtask
+
+endclass : yapp_exhaustive_seq
+

@@ -6,7 +6,7 @@
 
 //+UVM_TESTNAME=base_test
 //+UVM_TESTNAME=short_packet_test 
-+UVM_TESTNAME=incr_payload_test
++UVM_TESTNAME=exhaustive_seq_test
 
 +UVM_VERBOSITY=UVM_FULL
 //+UVM_VERBOSITY=UVM_LOW

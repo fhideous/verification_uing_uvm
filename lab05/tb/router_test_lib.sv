@@ -90,3 +90,25 @@ function void build_phase(uvm_phase phase);
 endfunction : build_phase
 
 endclass : incr_payload_test
+
+//-------------------------------------
+//  TEST. Call sequence which executes previous sequences
+//-------------------------------------
+
+class exhaustive_seq_test extends base_test;
+
+`uvm_component_utils(exhaustive_seq_test)
+
+function new(string name, uvm_component parent);  
+  super.new(name, parent);
+endfunction : new
+
+function void build_phase(uvm_phase phase);
+  yapp_packet::type_id::set_type_override(short_yapp_packet::get_type());
+  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
+                              "default_sequence",
+                              yapp_exhaustive_seq::get_type());
+  super.build_phase(phase);
+endfunction : build_phase
+
+endclass : exhaustive_seq_test
