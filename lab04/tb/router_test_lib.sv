@@ -11,7 +11,7 @@ endfunction : new
 
 function void build_phase(uvm_phase phase);
   super.build_phase(phase);
-  uvm_config_wrapper::set(this, "rot_tb.yapp.tx_agent.sequencer.run_phase",
+  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
                               "default_sequence",
                               yapp_5_packets::get_type());
   uvm_config_int::set( this, "*", "recording_detail", 1);
@@ -30,6 +30,8 @@ endfunction : end_of_elaboration_phase
 
 endclass : base_test 
 
+
+
 class short_packet_test extends base_test;
 
 `uvm_component_utils(short_packet_test)
@@ -41,7 +43,7 @@ endfunction : new
 function void build_phase(uvm_phase phase);
   yapp_packet::type_id::set_type_override(short_yapp_packet::get_type()); 
   super.build_phase(phase);
-  uvm_config_wrapper::set(this, "rot_tb.yapp.tx_agent.sequencer.run_phase",
+  uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
                               "default_sequence",
                               yapp_5_packets::get_type());
 endfunction : build_phase
