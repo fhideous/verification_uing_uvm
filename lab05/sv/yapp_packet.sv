@@ -62,6 +62,6 @@ class short_yapp_packet extends yapp_packet;
   endfunction : new
 
   constraint short_len    { length < 15;   } 
-  constraint short_addr   { addr != 'b10;  } 
+//  constraint short_addr   { addr != 'b10;  } 
 
 endclass : short_yapp_packet
