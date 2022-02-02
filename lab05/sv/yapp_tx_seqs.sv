@@ -162,6 +162,53 @@ class yapp_incr_payload_seq extends yapp_base_seq;
 
 endclass : yapp_incr_payload_seq
 
+
+
+// ------------------------------
+// SEUENCE : execute random number of packates 
+// ------------------------------
+
+class yapp_rnd_seq extends yapp_base_seq;
+  
+  `uvm_object_utils(yapp_rnd_seq)
+
+  function new(string name="yapp_rnd_seq");
+    super.new(name);
+  endfunction
+
+  rand int count;
+
+  constraint count_limit { count inside { [1:10] }; }
+
+  virtual task body();
+    `uvm_info(get_type_name(), "Executing yapp_rnd_seq sequence", UVM_LOW)
+    repeat(count)
+      `uvm_do(req)
+  endtask
+
+endclass : yapp_rnd_seq
+
+// ------------------------------
+// SEUENCE : execute 6 packates, based on previous class
+// ------------------------------
+
+class six_yapp_seq extends yapp_base_seq;
+  
+  `uvm_object_utils(six_yapp_seq)
+
+  function new(string name="six_yapp_seq");
+    super.new(name);
+  endfunction
+
+  yapp_rnd_seq rnd_seq;
+
+  virtual task body();
+    `uvm_info(get_type_name(), "Executing six_yapp_seq sequence", UVM_LOW)
+    `uvm_do_with(rnd_seq, {count == 6; })
+  endtask
+
+endclass : six_yapp_seq
+
 // ------------------------------
 // SEUENCE : single sequence which executes previous sequences
 // ------------------------------
@@ -179,6 +226,7 @@ class yapp_exhaustive_seq extends yapp_base_seq;
   yapp_111_seq y111;
   yapp_repeat_addr_seq yaddr;
   yapp_incr_payload_seq yinc;
+  six_yapp_seq syp;
 
   virtual task body();
     `uvm_info(get_type_name(), "Executing yapp_exhaustive_seq sequence", UVM_LOW)
@@ -187,7 +235,7 @@ class yapp_exhaustive_seq extends yapp_base_seq;
     `uvm_do(y111)
     `uvm_do(yaddr)
     `uvm_do(yinc)
+    `uvm_do(syp)
   endtask
 
 endclass : yapp_exhaustive_seq
-
