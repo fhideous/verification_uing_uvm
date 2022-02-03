@@ -3,6 +3,9 @@ package yapp_pkg;
 
   // import UVM and include UVM macros
   import uvm_pkg::*;
+
+  typedef uvm_config_db#(virtual yapp_if) yapp_vif_config;
+
   `include "uvm_macros.svh" 
   // include my yapp_packet into package
   
