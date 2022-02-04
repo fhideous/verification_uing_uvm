@@ -1,14 +1,17 @@
 
 class yapp_tx_driver extends uvm_driver #(yapp_packet);
-
   `uvm_component_utils(yapp_tx_driver)
   
+  // int                 num_sent;
+  virtual interface   yapp_if vif;
+
+  // `uvm_component_utils_begin(yapp_tx_driver)
+  //   `uvm_field_int(num_sent, UVM_ALL_ON)
+  // `uvm_component_utils_end
+
   function new (string name, uvm_component parent);
     super.new(name, parent);
   endfunction : new
-
-  int                 num_sent;
-  virtual interface   yapp_if vif;
 
   extern task run_phase(uvm_phase phase);
   extern task get_and_drive();
@@ -59,7 +62,7 @@ task yapp_tx_driver::get_and_drive();
 
     // End transaction recording
     end_tr(req);
-    num_sent++;
+    //  num_sent++;
     // Communicate item done to the sequencer
     seq_item_port.item_done();
   end

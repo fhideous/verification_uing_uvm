@@ -1,19 +1,20 @@
 
 class yapp_tx_monitor extends uvm_monitor;
-    
   `uvm_component_utils(yapp_tx_monitor)
   
+    virtual interface yapp_if vif;
+  // Collected Data handle
+  yapp_packet pkt;
+  // Count packets collected
+  // int num_pkt_col;
+
+  // `uvm_component_utils_begin(yapp_tx_monitor)
+  //   `uvm_field_int(num_pkt_col, UVM_ALL_ON)
+  // `uvm_component_utils_end
+
   function new (string name, uvm_component parent);
     super.new(name, parent);
   endfunction : new
-
-  virtual interface yapp_if vif;
-
-  // Collected Data handle
-  yapp_packet pkt;
-
-  // Count packets collected
-  int num_pkt_col;
 
   // UVM run() phase
   extern task run_phase( uvm_phase phase );
@@ -24,7 +25,7 @@ class yapp_tx_monitor extends uvm_monitor;
 
   // UVM report_phase
   function void report_phase(uvm_phase phase);
-    `uvm_info(get_type_name(), $sformatf("Report: YAPP Monitor Collected %0d Packets", num_pkt_col), UVM_LOW)
+    `uvm_info(get_type_name(), $sformatf("Report: YAPP Monitor Collected 0d Packets"), UVM_LOW)//, num_pkt_col), UVM_LOW)
   endfunction : report_phase
 
   function void connect_phase( uvm_phase phase );
@@ -59,6 +60,6 @@ endclass : yapp_tx_monitor
       // End transaction recording
       end_tr(pkt);
       `uvm_info(get_type_name(), $sformatf("Packet Collected :\n%s", pkt.sprint()), UVM_LOW)
-      num_pkt_col++;
+      //num_pkt_col++;
     end
   endtask : run_phase 
