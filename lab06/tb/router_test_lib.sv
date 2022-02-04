@@ -16,6 +16,13 @@ class base_test extends uvm_test;
     `uvm_info(get_type_name(), "Build Phase of the test is being exexuted", UVM_HIGH)
   endfunction : build_phase
 
+//The drain time allows packets to pass through the router before simulation ends
+ // Why i need it?... idk 
+  function void run_phase(uvm_phase phase);
+    uvm_objection obj = phase.get_objection();
+    obj.set_drain_time(this, 200ns);
+  endfunction : run_phase
+
   //This will help debug configuration errors by reporting any unmatched settings.
   function void check_phase(uvm_phase phase);
     check_config_usage();
@@ -114,3 +121,25 @@ class exhaustive_seq_test extends base_test;
   endfunction : build_phase
 
 endclass : exhaustive_seq_test
+
+//--------------
+// Testing sending packets to all three output. Call yapp_012_seq 
+//---------------
+
+class all_outputs extends base_test;
+
+  `uvm_component_utils(all_outputs)
+
+  function new(string name, uvm_component parent);  
+    super.new(name, parent);
+  endfunction : new
+
+  function void build_phase(uvm_phase phase);
+    yapp_packet::type_id::set_type_override(short_yapp_packet::get_type());
+    uvm_config_wrapper::set(this, "root_tb.yapp.tx_agent.sequencer.run_phase",
+                                "default_sequence",
+                                yapp_012_seq::get_type());
+    super.build_phase(phase);
+  endfunction : build_phase
+
+endclass : all_outputs
