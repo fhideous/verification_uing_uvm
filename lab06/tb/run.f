@@ -22,3 +22,6 @@
 clkgen.sv
 hw_top.sv
 tb_top.sv     
+
+// RTL
+../router_rtl/yapp_router.sv
