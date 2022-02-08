@@ -23,7 +23,7 @@ module hw_top;
     .clock          ,
     .reset          ,
     .run_clock      ,
-    .clock_perion
+    .clock_period
   );
 
   hbus_if hbus_if (
